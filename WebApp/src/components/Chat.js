@@ -3,6 +3,7 @@ import React, {PropTypes} from "react"
 import {connect} from "react-redux"
 import ReplyBox from "./ReplyBox"
 
+import classes from "./Bubble.css"
 
 export class Chat extends React.Component {
     render () {
@@ -33,29 +34,38 @@ export class Chat extends React.Component {
 
 function renderMessage (message) {
     return (
-        <li key={message.messageId}>
+        <div>
+        <div>
+        <span style={{color: "white"}}>{message.author.name + " "}</span>
+        </div>
+
+        <li style={{wordBreak: "break-all"}} key={message.messageId}>
+
 
             {/* Exercise 3: Add message author */}
             <img style ={imageStyle} src = {message.author.picture}/>
-            {message.author.name + ": "}
 
             {getMessageBody(message)}
+
+
         </li>
+        </div>
     )
 }
 
 const ulStyle = {
     overflowY: "scroll",
     fontFamily: "DejaVu sans",
+    listStyle: "none",
 
     /* Exercise 4: Add your own styles */
 
 }
 
 const imageStyle = {
-    maxWidth: "25px",
-    maxHeight: "25px",
-    borderRadius: "25px",
+    maxWidth: "50px",
+    maxHeight: "50px",
+    borderRadius: "50px",
     objectFit: "contain"
 }
 
@@ -63,7 +73,8 @@ const rootStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-    height: "100%"
+    height: "100%",
+    backgroundImage: "url('http://vignette3.wikia.nocookie.net/mystic-messenger/images/5/50/Wiki-background/revision/latest?cb=20160911154012')"
 }
 
 function getMessageDate (message) {
@@ -74,7 +85,13 @@ function getMessageBody (message) {
     if (message.data) {
         return <img src={message.data} style={imageStyle} />
     } else {
-        return message.text
+        return(
+          <div className={classes.talkBubble + " " + classes.round + " " + classes.leftIn + " " + classes.triRight}>
+          <div style={{color: "black"}} className={classes.talktext}>
+          {message.text}
+        </div>
+        </div>
+      )
     }
 }
 
